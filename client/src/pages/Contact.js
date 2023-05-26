@@ -1,9 +1,9 @@
-import React from 'react'
-import Layout from '../components/Layout/Layout';
+import './styles/contact.css';
 import { Link } from 'react-router-dom';
+import Layout from '../components/Layout/Layout';
 const Contact = () => {
   return (
-    <Layout>
+    <Layout title={"Contact | PIVOT an E-commerce App Best selling products"}>
       <div className="content">
         <div className="container">
           <div className="row justify-content-center mt-5 mb-2">
@@ -11,7 +11,7 @@ const Contact = () => {
               <div className="row align-items-center">
                 <div className="col-lg-7 mb-5 mb-lg-0">
                   <h2 className="mb-5 fw-bold">How can we help you today?</h2>
-                  <p className=''>
+                  <p className="">
                     Tell us about your query or concern.We are here to assist
                     you promptly.
                   </p>

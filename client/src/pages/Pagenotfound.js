@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 const Pagenotfound = () => {
   return (
-    <Layout>
+    <Layout title={"go-back | Page not found |PIVOT an E-commerce App Best selling products"}>
       <div className="main mt-3">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 355">
@@ -383,7 +383,9 @@ const Pagenotfound = () => {
         </div>
       </div>
       <div className="text-center">
-        <Link to='/' className="btn btn-primary mb-3">Go Back</Link>
+        <Link to="/" className="btn btn-primary mb-3">
+          Go Back
+        </Link>
       </div>
     </Layout>
   );

@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
+import cors from "cors";
 
 dotenv.config(); // configure .env
 
@@ -15,6 +16,7 @@ const app = express(); // Rest Object
 connectDB(); // database configure
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
