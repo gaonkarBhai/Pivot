@@ -6,7 +6,7 @@ import JWT from "jsonwebtoken";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, question } = req.body;
 
     //validation
     if (!name) return res.send({ message: "Name is required" });
@@ -14,6 +14,7 @@ export const registerController = async (req, res) => {
     if (!password) return res.send({ message: "Password is required" });
     if (!phone) return res.send({ message: "Phone is required" });
     if (!address) return res.send({ message: "Address is required" });
+    if (!question) return res.send({ message: "Answer is required" });
 
     // check the existance of user
     const existsUser = await userModel.findOne({ email });
@@ -33,6 +34,7 @@ export const registerController = async (req, res) => {
       email,
       address,
       phone,
+      question,
     }).save();
     res
       .status(201)
@@ -93,7 +95,31 @@ export const loginController = async (req, res) => {
     });
   }
 };
-
+// ------------------- forgot password ---------------
+export const forgotPasswordController = async(req,res)=>{
+  try {
+    const { question, email, newPassword } = req.body;
+    if (!email) return res.status(404).send({ message: "Email is required" });
+    if (!question) return res.status(404).send({ message: "Answer is required" });
+    if (!newPassword) return res.status(404).send({ message: "New Password is required" });
+    const user = await userModel.findOne({email,question})
+    // check user
+    if(!user) return res.status(404).send({success:false, message: "User is not found" });
+    const hashed = await hashPassword(newPassword)
+    await userModel.findByIdAndUpdate(user._id,{password:hashed})
+    res.status(200).send({
+      success:true,
+      message:"Password reset successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success:false,
+      message:"Something went wrong",
+      error
+    })
+  }
+}
 // ---------------------- test -----------------------
 
 export const testUser = (req,res) =>{

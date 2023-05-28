@@ -11,6 +11,7 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [question, setQuestion] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -24,6 +25,7 @@ const Register = () => {
           password,
           phone,
           address,
+          question,
         }
       );
       if (res.data.success) {
@@ -98,6 +100,18 @@ const Register = () => {
                 required
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div className="form-row ">
+              <label htmlFor="address">Who is your favorite teacher</label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                className="input-text"
+                required
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
               />
             </div>
             <div className="form-group">

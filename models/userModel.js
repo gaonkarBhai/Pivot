@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    question:{
+      type:String,
+      require:true,
+    }
   },
   { timestamps: true }
 );

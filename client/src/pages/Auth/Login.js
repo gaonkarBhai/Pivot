@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import '../styles/login.css'
+import { useAuth } from "../../context/auth";
 const Login = () => {
+  const location = useLocation()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [auth,setAuth] = useAuth()
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,14 +25,20 @@ const Login = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/");
+        setAuth({
+          ...auth,
+          user:res.data.user,
+          token:res.data.token
+        })
+        localStorage.setItem("auth",JSON.stringify(res.data))
+        navigate(location.state||"/");
       } else toast.error(res.data.message);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <Layout>
+    <Layout title={"Login || Pivot Online Ecommerce WebApp"}>
       <div className="container mb-5">
         <div className="row d-flex justify-content-center mt-5">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -57,25 +66,8 @@ const Login = () => {
                     className="form-control"
                     placeholder="Password"
                   />
+                  <p className="text-primary" style={{cursor:"pointer"}} onClick={()=>navigate("/forgot-password")}>Forgot Password</p>
                 </div>
-                {/* <div className="row">
-                  <div className="col-md-6 col-12">
-                    <div className="form-group form-check">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="exampleCheck1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleCheck1"
-                      >
-                        Rester connecte
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-md-6 col-12 bn">Mot se passe oublie</div>
-                </div> */}
                 <div className="form-group mt-3">
                   <button
                     type="submit"
