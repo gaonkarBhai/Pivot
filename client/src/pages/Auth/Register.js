@@ -5,13 +5,16 @@ import "../styles/register.css";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+
 const Register = () => {
+//       getter, setter
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [question, setQuestion] = useState("");
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -38,7 +41,7 @@ const Register = () => {
     }
   };
   return (
-    <Layout>
+    <Layout title={"Register | Pivot Online Ecommerce WebApp"}>
       <div className="page-content">
         <div className="form-v4-content">
           <div className="form-left">
@@ -106,8 +109,8 @@ const Register = () => {
               <label htmlFor="address">Who is your favorite teacher</label>
               <input
                 type="text"
-                name="address"
-                id="address"
+                name="teacher"
+                id="teacher"
                 className="input-text"
                 required
                 value={question}

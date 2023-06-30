@@ -21,10 +21,10 @@ export const registerController = async (req, res) => {
     if (existsUser)
       return res.status(200).send({
         success: false,
-        message: "user is already exists please login.",
+        message: "User is already exists please login",
       });
 
-    // Register User
+    // hash User password
     const hashedpassword = await hashPassword(password);
 
     // Save the user
@@ -63,7 +63,7 @@ export const loginController = async (req, res) => {
     if (!user)
       return res
         .status(404)
-        .send({ success: false, message: "email is not registered" });
+        .send({ success: false, message: "Email is not registered" });
     // comparing the password
     const match = await comparePassword(password, user.password);
     if (!match)
@@ -79,10 +79,12 @@ export const loginController = async (req, res) => {
       success: true,
       message: "login successfully",
       user: {
+        _id:user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,
         address: user.address,
+        role:user.role
       },
       token,
     });
@@ -95,6 +97,8 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+
 // ------------------- forgot password ---------------
 export const forgotPasswordController = async(req,res)=>{
   try {
@@ -102,9 +106,12 @@ export const forgotPasswordController = async(req,res)=>{
     if (!email) return res.status(404).send({ message: "Email is required" });
     if (!question) return res.status(404).send({ message: "Answer is required" });
     if (!newPassword) return res.status(404).send({ message: "New Password is required" });
+
     const user = await userModel.findOne({email,question})
+
     // check user
     if(!user) return res.status(404).send({success:false, message: "User is not found" });
+
     const hashed = await hashPassword(newPassword)
     await userModel.findByIdAndUpdate(user._id,{password:hashed})
     res.status(200).send({
@@ -120,6 +127,9 @@ export const forgotPasswordController = async(req,res)=>{
     })
   }
 }
+
+
+
 // ---------------------- test -----------------------
 
 export const testUser = (req,res) =>{

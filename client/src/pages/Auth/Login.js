@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate,useLocation } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
-import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import '../styles/login.css'
 import { useAuth } from "../../context/auth";
+
 const Login = () => {
+
   const location = useLocation()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     try {
       const res = await axios.post(
@@ -38,7 +40,7 @@ const Login = () => {
     }
   };
   return (
-    <Layout title={"Login || Pivot Online Ecommerce WebApp"}>
+    <Layout title={"Login | Pivot Online Ecommerce WebApp"}>
       <div className="container mb-5">
         <div className="row d-flex justify-content-center mt-5">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -48,7 +50,7 @@ const Login = () => {
                 Sign in to your account and start shopping!
               </p>
 
-              <form className="myform" onClick={handleSubmit}>
+              <form className="myform" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
                     value={email}

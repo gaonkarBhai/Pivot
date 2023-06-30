@@ -1,11 +1,10 @@
 import Layout from "../../components/Layout/Layout";
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 
 const ForgotPassword = () => {
-    const location = useLocation();
     const [email, setEmail] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [question, setQuestion] = useState("");
@@ -19,12 +18,11 @@ const ForgotPassword = () => {
           {
             email,
             newPassword,
-            question
+            question,
           }
         );
         if (res.data.success) {
-          toast.success(res.data.message);
-          
+          toast.success(res.data.message);   
           navigate( "/login");
         } else toast.error(res.data.message);
       } catch (error) {

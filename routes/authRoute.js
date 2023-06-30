@@ -15,12 +15,22 @@ const router = express.Router(); // Router object
 router.post("/register", registerController);
 // Login User -> POST
 router.post("/login", loginController);
-// Forgot Password -> Post
+
+
+// Forgot Password -> POST
 router.post("/forgot-password", forgotPasswordController);
-// test -> GET
-router.get("/test", requireSignIn, isAdmin, testUser);
+
+
 // Protected route -> GET
 router.get("/user-auth", requireSignIn, (req, res) => {
   res.status(200).send({ ok: true });
 });
+// Protected route -> GET
+router.get("/admin-auth", requireSignIn,isAdmin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
+// test -> GET
+router.get("/test", requireSignIn, isAdmin, testUser);
+
 export default router;
