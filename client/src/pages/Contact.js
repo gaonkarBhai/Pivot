@@ -1,6 +1,6 @@
-import './styles/contact.css';
-import { Link } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
+import "./styles/contact.css";
+import { Link } from "react-router-dom";
+import Layout from "../components/Layout/Layout";
 const Contact = () => {
   return (
     <Layout title={"Contact | PIVOT an E-commerce App Best selling products"}>
@@ -97,6 +97,6 @@ const Contact = () => {
       </div>
     </Layout>
   );
-}
+};
 
-export default Contact
+export default Contact;
