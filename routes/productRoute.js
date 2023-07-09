@@ -10,6 +10,7 @@ import {
   updateProductController,
 } from "../controllers/productController.js";
 import formidable from "express-formidable";
+
 router.post(
   "/create-product",
   requireSignIn,

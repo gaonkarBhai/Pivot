@@ -11,6 +11,8 @@ export const createProductController = async (req,res) => {
         switch (true) {
           case !name:
             return res.status(500).send({ error: "Name is required" });
+          // case !shipping:
+          //   return res.status(500).send({ error: "Name is required" });
           case !category:
             return res.status(500).send({ error: "category is required" });
           case !description:
@@ -21,7 +23,7 @@ export const createProductController = async (req,res) => {
             return res.status(500).send({ error: "price is required" });
           case photo && photo.size>100000:
             return res.status(500).send({ error: "Photo is required should less then 1MB" });
-        }
+        } 
         const product = new productModel({...req.fields,slug:slugify(name)})
         if(photo){
           console.log(photo.path);
