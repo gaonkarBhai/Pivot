@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import { Checkbox } from "antd";
+import { Checkbox, Radio } from "antd";
+import { Prices } from "../components/Prices";
 
 const HomePage = () => {
-
   const [products, setProduct] = useState([]);
   const [category, setCategory] = useState([]);
   const [checked, setChecked] = useState([]);
+  const [radio, setRadio] = useState([]);
 
   const getAllProduct = async () => {
     try {
@@ -30,22 +31,38 @@ const HomePage = () => {
       console.log(error);
     }
   };
-  const handleFilter = (value,id) => {
-    let all = [...checked]
-    if(value)
-    all.push(id)
-    else{
-      all = all.filter(c=>c!=id)
+
+  const handleFilter = (value, id) => {
+    let all = [...checked];
+    if (value) all.push(id);
+    else {
+      all = all.filter((c) => c != id);
     }
-    setChecked(all)
+    setChecked(all);
+  };
+
+  const filteredProduct = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/filter-product`,
+        { checked, radio }
+      );
+      setProduct(data?.products);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getAllCategory();
   }, []);
   useEffect(() => {
-    getAllProduct();
-  }, []);
+    if (!checked.length || !radio.length) getAllProduct();
+  }, [checked.length, radio.length]);
+ useEffect(() => {
+   if (checked.length || radio.length) filteredProduct();
+ }, []);
+  
   return (
     <Layout title="Pivote | Online Ecommerce website ">
       <div className="row">
@@ -53,14 +70,27 @@ const HomePage = () => {
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
             {category?.map((c) => (
-              <Checkbox key={c._id} onChange={e=>handleFilter(e.target.checked,c._id)}>
+              <Checkbox
+                key={c._id}
+                onChange={(e) => handleFilter(e.target.checked, c._id)}
+              >
                 {c.name}
               </Checkbox>
             ))}
           </div>
+          <h4 className="text-center mt-3">Filter By Price</h4>
+          <div className="d-flex flex-column">
+            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
+              {Prices?.map((p) => (
+                <div key={p._id}>
+                  <Radio value={p.array}>{p.name}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </div>
         </div>
         <div className="col-md-9">
-        {JSON.stringify(checked,null,4)}
+          {JSON.stringify(radio, null, 4)}
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((product) => (
@@ -76,7 +106,8 @@ const HomePage = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">{product.description}</p>
+                  <p className="card-text">{product.description.substring(0,30)}...</p>
+                  <p className="card-text">{`${product.price} Rs`}</p>
                   <button className="btn btn-primary ms-1">More Details</button>
                   <button className="btn btn-primary ms-1">Add to Cart</button>
                 </div>
