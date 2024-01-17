@@ -4,34 +4,34 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
       trim: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
       unique: true,
     },
     password: {
       type: String,
-      require: true,
+      required: true,
     },
     phone: {
       type: String,
-      require: true,
+      required: true,
     },
     address: {
+      type: {},
+      required: true,
+    },
+    answer: {
       type: String,
-      require: true,
+      required: true,
     },
     role: {
       type: Number,
       default: 0,
     },
-    question:{
-      type:String,
-      require:true,
-    }
   },
   { timestamps: true }
 );

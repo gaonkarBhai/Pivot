@@ -4,36 +4,45 @@ const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
-      trim: true,
+      required: true,
     },
     slug: {
       type: String,
-      lowercase: true,
-      require:true
+      required: true,
     },
     description: {
       type: String,
-      require: true,
-      trim: true,
+      required: true,
     },
     price: {
       type: Number,
-      require: true,
+      required: true,
+    },
+    category: {
+      type: mongoose.ObjectId,
+      ref: "Category",
+      required: true,
     },
     quantity: {
       type: Number,
-      require: true,
+      required: true,
     },
-    category: {
-      type: mongoose.Types.ObjectId,
-      ref: "Category",
-      require: true,
+    quality: {
+      type: Number,
+      required: true,
     },
-    photo: {
-      data: Buffer,
-      contentType: String,
-    },
+    photo: [
+      {
+        data: Buffer,
+        contentType: String,
+      },
+    ],
+    availableSizes: [
+      {
+        type: String,
+        // enum: ["XS", "S", "M", "L", "XL", "XXL"],
+      },
+    ],
     shipping: {
       type: Boolean,
     },
@@ -41,4 +50,4 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Product", productSchema);
+export default mongoose.model("Products", productSchema);
