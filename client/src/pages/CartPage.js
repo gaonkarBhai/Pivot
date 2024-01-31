@@ -3,11 +3,10 @@ import Layout from "./../components/Layout/Layout";
 import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
-// import DropIn from "braintree-web-drop-in-react";
-import { AiFillWarning } from "react-icons/ai";
+// import { AiFillWarning } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
-import "../styles/CartStyles.css";
+// import "../styles/CartStyles.css";
 import { Razorpay } from "razorpay";
 
 const CartPage = () => {
@@ -54,7 +53,7 @@ const CartPage = () => {
       });
       console.log(data.order.amount);
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_API_KEY, // Enter the Key ID generated from the Dashboard
+        key: process.env.REACT_APP_RAZORPAY_API_KEY, 
         amount: Number(data.order.amount), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "Naveen Ganapati Gaonkar",
